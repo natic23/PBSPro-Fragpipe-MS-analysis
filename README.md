@@ -36,7 +36,7 @@ Processed with Fragpipe-HPC vs Fragpipe-GUI
 
 
 ---
-#### Steps (I am running on a windows PC)
+## Steps (I am running on a windows PC)
 1. Make a folder in your $HOME, i.e. FP_HPC
 2. Install miniconda in $HOME/FP_HPC
 3. Install latest python in $HOME/FP_HPC/miniconda with this: `conda install python` 
@@ -99,7 +99,7 @@ singularity exec --bind $HOME/FP_HPC:/data fragpipe_latest.sif \
 # Please edit the following path to point to the correct location.
 database.db-path=R:\home\FP_HPC\rat_decoy_contam.fas
 ```
-3. Change **R:\home\FP_HPC\** into **/data/**
+3. Change **'R:\home\FP_HPC\'** into **/data/**
 4. Save the workflow file after making changes
 ...
 - we replace $HOME/FP_HPC with /data/ because singularity is mount inside FP_HPC:
