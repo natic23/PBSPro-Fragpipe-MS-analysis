@@ -1,14 +1,14 @@
 # PBSPro-Fragpipe-MS-analysis
-#### a PBS Pro submission shell script for FragPipe Mass Spectometry data analysis
+## a PBS Pro submission shell script for FragPipe Mass Spectometry data analysis
 --- 
-#### Fragpipe GUI vs HPC
+# Fragpipe GUI vs HPC
 
-##### GUI Fragpipe usage (referred as Fragpipe-GUI)
+## GUI Fragpipe usage (referred as Fragpipe-GUI)
 relies on local machine's inbuilt RAM --most laptop/PC has 16-32GB RAM, powerful-lab processing PC might have 128GB RAM
 - Fragpipe will occupy the entire machine's RAM resource: laggy laptop when fragpipe is running
 
 
-##### HPC(PBS Pro) integration of the established Fragpipe Mass-Spec analysis tool
+## HPC(PBS Pro) integration of the established Fragpipe Mass-Spec analysis tool
 (referred as Fragpipe-HPC)
 
 HPC integration offers high-RAM, multicore Fragpipe processing of large (>100GB) Mass Spec dataset
@@ -16,7 +16,7 @@ Uses HPC system, instead of local computer: less monitoring required and lower r
 You could require a lot more parallelism and RAM for a Fragpipe job on HPC -- Significantly decreases run time for each run
 
 ---
-### Software used:
+## Software used:
 1. Fragpipe 23.1 \
 https://github.com/Nesvilab/FragPipe.git
 2. MSFragger\
@@ -58,7 +58,7 @@ Processed with Fragpipe-HPC vs Fragpipe-GUI
 		v. python binary (in miniconda folder), i.e. $HOME/FP_HPC/miniconda/bin/python3.13 
 
 --- 
-#### Core Script
+## Core Script
 ```python
 singularity exec --bind $HOME/FP_HPC:/data fragpipe_latest.sif \
   /data/Fragpipe/bin/fragpipe --headless \
@@ -71,14 +71,14 @@ singularity exec --bind $HOME/FP_HPC:/data fragpipe_latest.sif \
     --config-python /data/miniconda/bin/python3.13 ##python binary path
 ```
 ---
-#### Pulling Singularity container to your HPC environment (Instruction extracted from [Fragpipe Official Singluarity](http://fragpipe.nesvilab.org/docs/tutorial_docker.html)
+### Pulling Singularity container to your HPC environment (Instruction extracted from [Fragpipe Official Singluarity](http://fragpipe.nesvilab.org/docs/tutorial_docker.html)
 1. Login to your HPC
 2. most HPC system should have Singularity/Apptainer installed
 3. Go to path $HOME/FP-HPC
 4. run `singularity pull docker://fcyucn/fragpipe:latest` or `apptainer pull docker://fcyucn/fragpipe:latest`
 ---
-#### Fixing file syntax into bash-compatible in files
-###### Manifest file
+### Fixing file syntax into bash-compatible in files
+#### Manifest file
 1. open your manifest file (mine is manifest1.fp-manifest) in any text editor
 2. replace start of the absolute path (i.e. R:\home\FP_HPC\) with /data/
 3. Find and Replace all \ with **/**
@@ -92,7 +92,7 @@ singularity exec --bind $HOME/FP_HPC:/data fragpipe_latest.sif \
 - we replace $HOME/FP_HPC with /data/ because singularity is mount inside FP_HPC:
 	all paths that will be read by the machine has to be relative to $HOME/FP_HPC
 
-###### Workflow file
+#### Workflow file
 1. open the **workflow** file
 2. inside workflow file:
 ```
