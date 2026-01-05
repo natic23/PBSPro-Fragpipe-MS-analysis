@@ -105,4 +105,11 @@ database.db-path=R:\home\FP_HPC\rat_decoy_contam.fas
 - we replace $HOME/FP_HPC with /data/ because singularity is mount inside FP_HPC:
 	all paths that will be read by the machine has to be relative to $HOME/FP_HPC
 
+---
+#### ALL DONE!
+
+log into HPC system
+1. Change Directory to where your PBS submission script is (.sh script), i.e. `cd FP_HPC\`
+2. `qsub pbs_fragpipe_job_ntfy.sh` to submit the script
+3. `qstat -u <user_name>`
 
