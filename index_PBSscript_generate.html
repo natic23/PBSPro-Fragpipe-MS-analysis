@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PBS FragPipe Script Generator</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 6px;
+      margin-top: 4px;
+    }
+    button {
+      margin-top: 25px;
+      padding: 10px;
+      width: 100%;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+<h2>PBS FragPipe Submission Script Generator</h2>
+
+<label>Job name</label>
+<input id="JOBNAME" placeholder="jobname">
+
+<label>Home directory (working directory)</label>
+<input id="HOMEDIR" placeholder="$HOME">
+
+<label>Bind directory (host path)</label>
+<input id="BINDDIR" placeholder="$HOME/LC_MS">
+
+<label>Workflow path</label>
+<input id="WORKFLOW" placeholder="/data/workflow.fp_workflow">
+
+<label>Manifest path</label>
+<input id="MANIFEST" placeholder="/data/manifest.txt">
+
+<label>Output directory</label>
+<input id="OUTPUTDIR" placeholder="/data/output">
+
+<button onclick="generateScript()">Generate PBS Script</button>
+
+<script>
+function generateScript() {
+  const values = {
+    JOBNAME: document.getElementById("JOBNAME").value,
+    HOMEDIR: document.getElementById("HOMEDIR").value,
+    BINDDIR: document.getElementById("BINDDIR").value,
+    WORKFLOW: document.getElementById("WORKFLOW").value,
+    MANIFEST: document.getElementById("MANIFEST").value,
+    OUTPUTDIR: document.getElementById("OUTPUTDIR").value
+  };
+
+  let script = `#!/bin/bash
+#PBS -N __JOBNAME__
+#PBS -l select=1:ncpus=16:mem=256gb:cpu_type=icelake
+#PBS -l walltime=12:00:00
+
+cd __HOMEDIR__
+
+unset _JAVA_OPTIONS
+export LC_ALL=C
+export LANG=C
+
+singularity exec --bind __BINDDIR__:/data fragpipe_latest.sif \\
+  /data/Fragpipe/bin/fragpipe --headless \\
+    --workflow __WORKFLOW__ \\
+    --manifest __MANIFEST__ \\
+    --workdir __OUTPUTDIR__ \\
+    --ram 256 \\
+    --threads 16 \\
+    --config-tools-folder /data/Fragpipe/tools \\
+    --config-python /data/miniconda/bin/python3.13
+`;
+
+  for (const key in values) {
+    script = script.replaceAll(`__${key}__`, values[key]);
+  }
+
+  const blob = new Blob([script], { type: "text/plain" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "pbs_fragpipe_job.sh";
+  link.click();
+}
+</script>
+
+</body>
+</html>
