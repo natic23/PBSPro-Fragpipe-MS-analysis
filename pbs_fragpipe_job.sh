@@ -10,7 +10,7 @@ export LC_ALL=C
 export LANG=C
 
 singularity exec --bind $HOME/FP_HPC:/data fragpipe_latest.sif \
-  /data/Fragpipe/bin/fragpipe --headless \
+  /data/fragpipe-23.1/bin/fragpipe --headless \
     --workflow /data/LFQ-MBR_human.workflow\  ##workflow path
     --manifest /data/manifest1.fp-manifest \  ##manifest path
     --workdir /data/result1 \ ##output directory path
