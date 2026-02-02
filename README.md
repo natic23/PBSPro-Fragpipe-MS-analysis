@@ -1,3 +1,4 @@
+[![DOI](https://zenodo.org/badge/1123079278.svg)](https://doi.org/10.5281/zenodo.18457983)
 # PBSPro-Fragpipe-MS-analysis
 ## a PBS Pro submission shell script for FragPipe Mass Spectometry data analysis
 --- 
